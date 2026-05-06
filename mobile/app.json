@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "LaFlemme",
-    "slug": "laflemme",
-    "scheme": "laflemme",
+    "name": "La Flemme",
+    "slug": "la flemme",
+    "scheme": "la flemme",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/LA FLEMME(2).png",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
     "splash": {
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.anonymous.laflemme"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -29,8 +29,8 @@
       "output": "single",
       "themeColor": "#e94560",
       "backgroundColor": "#16213e",
-      "name": "LaFlemme",
-      "shortName": "LaFlemme",
+      "name": "La Flemme",
+      "shortName": "La Flemme",
       "description": "Combat ta procrastination. Ou La Flemme t'appelle.",
       "startUrl": "/",
       "display": "standalone",

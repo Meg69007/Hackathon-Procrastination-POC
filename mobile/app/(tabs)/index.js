@@ -117,7 +117,7 @@ function TaskCard({ task }) {
       <View style={styles.cardTop}>
         <Text style={styles.cardTitle}>{task.title}</Text>
         <View style={styles.cardBadges}>
-          {task.flemmeActive && <Text style={styles.flemmeBadge}>💀</Text>}
+          {task.flemmeActive && <Text style={styles.flemmeBadge}></Text>}
           {isOverdue && <Text style={styles.overdueBadge}>⚠️</Text>}
         </View>
       </View>

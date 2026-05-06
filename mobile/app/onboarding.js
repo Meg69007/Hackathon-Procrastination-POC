@@ -99,7 +99,7 @@ export default function OnboardingScreen() {
                 onPress={handleCreateContact}
               >
                 <Text style={styles.contactBtnText}>
-                  {contactDone ? '✅ Contact La Flemme créé' : '💀 Créer le contact La Flemme'}
+                  {contactDone ? '✅ Contact La Flemme créé' : ' Créer le contact La Flemme'}
                 </Text>
               </TouchableOpacity>
             )}

@@ -40,7 +40,7 @@ export default function SettingsScreen() {
 
   const handleCreateContact = async () => {
     const ok = await createFlemmeContact();
-    if (ok) { setContactCreated(true); Alert.alert('💀 Contact créé', `"La Flemme 😤" est dans tes contacts avec le numéro ${FLEMME_PHONE}.`); }
+    if (ok) { setContactCreated(true); Alert.alert('Contact créé', `"La Flemme 😤" est dans tes contacts avec le numéro ${FLEMME_PHONE}.`); }
   };
 
   return (
@@ -80,7 +80,7 @@ export default function SettingsScreen() {
 
             {Platform.OS !== 'web' && (
               <TouchableOpacity style={[styles.flemmeBtn, contactCreated && styles.flemmeBtnDone]} onPress={handleCreateContact}>
-                <Text style={styles.flemmeBtnText}>{contactCreated ? '✅ Contact créé' : '💀 Créer le contact La Flemme'}</Text>
+                <Text style={styles.flemmeBtnText}>{contactCreated ? '✅ Contact créé' : 'Créer le contact La Flemme'}</Text>
               </TouchableOpacity>
             )}
 
