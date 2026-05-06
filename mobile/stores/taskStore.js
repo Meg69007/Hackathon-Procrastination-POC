@@ -150,6 +150,16 @@ export const useTaskStore = create((set, get) => ({
     await saveTasks(tasks);
   },
 
+  deleteStep: async (taskId, stepId) => {
+    const tasks = get().tasks.map((t) => {
+      if (t.id !== taskId) return t;
+      const steps = t.steps.filter((s) => s.id !== stepId);
+      return { ...t, steps };
+    });
+    set({ tasks });
+    await saveTasks(tasks);
+  },
+
   getTotalXP: () => get().tasks.reduce((sum, t) => sum + (t.xp || 0), 0),
   getCompletedCount: () => get().tasks.filter((t) => t.completed).length,
   getPendingOverdue: () => {

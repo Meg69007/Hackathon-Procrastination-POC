@@ -27,7 +27,7 @@ function getFlemmeLevel(task) {
 
 export default function TaskDetailScreen() {
   const { id } = useLocalSearchParams();
-  const { tasks, completeStep, uncompleteStep, completeTask, uncompleteTask, activateFlemme, deleteTask, updateStepNotes } = useTaskStore();
+  const { tasks, completeStep, uncompleteStep, completeTask, uncompleteTask, activateFlemme, deleteTask, deleteStep, updateStepNotes } = useTaskStore();
   const { startSession } = useTimerStore();
   const { phone, backendUrl } = useUserStore();
   const task = tasks.find((t) => t.id === id);
@@ -37,6 +37,7 @@ export default function TaskDetailScreen() {
   const [celebrating, setCelebrating] = useState(false);
   const [expandedStep, setExpandedStep] = useState(null);
   const [notesDraft, setNotesDraft] = useState({});
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   if (!task) return (
     <View style={styles.notFound}>
@@ -109,12 +110,7 @@ export default function TaskDetailScreen() {
       ]);
   };
 
-  const handleDelete = () => {
-    Alert.alert('Supprimer ?', 'Cette action est irréversible.', [
-      { text: 'Annuler', style: 'cancel' },
-      { text: 'Supprimer', style: 'destructive', onPress: async () => { await deleteTask(task.id); router.push('/'); } },
-    ]);
-  };
+  const handleDelete = () => setConfirmDelete(true);
 
   return (
     <SafeAreaView style={styles.container} edges={['bottom']}>
@@ -183,6 +179,12 @@ export default function TaskDetailScreen() {
                     }}
                   >
                     <Text style={styles.noteToggleText}>📝</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.stepDeleteBtn}
+                    onPress={() => deleteStep(task.id, step.id)}
+                  >
+                    <Text style={styles.stepDeleteText}>🗑</Text>
                   </TouchableOpacity>
                 </TouchableOpacity>
 
@@ -254,9 +256,23 @@ export default function TaskDetailScreen() {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity style={styles.deleteBtn} onPress={handleDelete}>
-          <Text style={styles.deleteBtnText}>Supprimer la tâche</Text>
-        </TouchableOpacity>
+        {!confirmDelete ? (
+          <TouchableOpacity style={styles.deleteBtn} onPress={handleDelete} activeOpacity={0.8}>
+            <Text style={styles.deleteBtnText}>🗑 Supprimer la tâche</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.confirmBox}>
+            <Text style={styles.confirmText}>Supprimer définitivement ?</Text>
+            <View style={styles.confirmRow}>
+              <TouchableOpacity style={styles.confirmCancel} onPress={() => setConfirmDelete(false)}>
+                <Text style={styles.confirmCancelText}>Annuler</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.confirmOk} onPress={() => { router.replace('/'); deleteTask(task.id); }}>
+                <Text style={styles.confirmOkText}>Supprimer</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -293,6 +309,8 @@ const styles = StyleSheet.create({
   stepNotePreview: { color: '#555', fontSize: 11, marginTop: 2, fontStyle: 'italic' },
   noteToggle: { padding: 4 },
   noteToggleText: { fontSize: 18, opacity: 0.6 },
+  stepDeleteBtn: { padding: 4, marginLeft: 2 },
+  stepDeleteText: { fontSize: 16, opacity: 0.7 },
   notesBox: { backgroundColor: '#0f3460', borderRadius: 8, padding: 12, marginBottom: 8, marginTop: -2 },
   notesInput: { backgroundColor: '#1a1a2e', color: '#eee', borderRadius: 8, padding: 10, fontSize: 14, minHeight: 70, textAlignVertical: 'top' },
   notesSaveBtn: { backgroundColor: '#e94560', borderRadius: 6, padding: 8, alignItems: 'center', marginTop: 8 },
@@ -313,6 +331,13 @@ const styles = StyleSheet.create({
   flemmeCallCount: { color: '#555', fontSize: 12, marginTop: 4 },
   btnReopen: { borderWidth: 1, borderColor: '#8888aa', borderRadius: 12, padding: 14, alignItems: 'center', marginBottom: 10 },
   btnReopenText: { color: '#8888aa', fontWeight: '700', fontSize: 14 },
-  deleteBtn: { alignItems: 'center', paddingVertical: 16 },
-  deleteBtnText: { color: '#555', fontSize: 13 },
+  deleteBtn: { backgroundColor: '#b71c1c', borderRadius: 12, padding: 16, alignItems: 'center', marginTop: 8 },
+  deleteBtnText: { color: '#fff', fontWeight: '800', fontSize: 15 },
+  confirmBox: { backgroundColor: '#1a0000', borderRadius: 12, padding: 16, marginTop: 8, borderWidth: 1, borderColor: '#b71c1c' },
+  confirmText: { color: '#eee', fontWeight: '700', fontSize: 14, textAlign: 'center', marginBottom: 12 },
+  confirmRow: { flexDirection: 'row', gap: 10 },
+  confirmCancel: { flex: 1, backgroundColor: '#0f3460', borderRadius: 10, padding: 12, alignItems: 'center' },
+  confirmCancelText: { color: '#eee', fontWeight: '700', fontSize: 14 },
+  confirmOk: { flex: 1, backgroundColor: '#b71c1c', borderRadius: 10, padding: 12, alignItems: 'center' },
+  confirmOkText: { color: '#fff', fontWeight: '800', fontSize: 14 },
 });

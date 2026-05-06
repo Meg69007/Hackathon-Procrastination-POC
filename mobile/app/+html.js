@@ -22,11 +22,11 @@ export default function Root({ children }) {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="LaFlemme" />
+        <meta name="apple-mobile-web-app-title" content="La Flemme" />
         <meta name="description" content="Combat ta procrastination. Ou La Flemme t'appelle." />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
-        <title>LaFlemme 💀</title>
+        <title>La Flemme</title>
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{
           __html: `
