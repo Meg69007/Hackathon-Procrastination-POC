@@ -126,6 +126,10 @@ Dans **Paramètres**, renseigne ton numéro de téléphone.
 
 ---
 
+## Créateurs
+
+Réaliser par Mathieu Girard et Gabriel Megroian
+
 ## 📄 Licence
 
 MIT — réalisé lors d'un hackathon, utilisation libre.
