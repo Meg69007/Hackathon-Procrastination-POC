@@ -69,41 +69,6 @@ Tu rates une deadline ? La Flemme t'appelle. Tu l'ignores ? Elle rappelle. Toute
 
 ---
 
-## 📁 Structure du projet
-
-```
-.
-├── backend/               # Backend Python FastAPI
-│   ├── main.py            # Serveur API + boucle d'appels Twilio
-│   ├── requirements.txt
-│   └── .env.example
-└── mobile/                # Application Expo React Native
-    ├── app/
-    │   ├── (tabs)/
-    │   │   ├── index.js   # Liste des tâches (écran d'accueil)
-    │   │   └── stats.js   # XP, streaks, badges
-    │   ├── task/
-    │   │   ├── create.js  # Formulaire de création de tâche
-    │   │   └── [id].js    # Détail de tâche & complétion des étapes
-    │   ├── cycle/
-    │   │   └── [id].js    # Écran du minuteur Pomodoro
-    │   ├── onboarding.js  # Flux de premier lancement
-    │   └── settings.js    # Paramètres de l'app
-    ├── stores/
-    │   ├── taskStore.js   # État des tâches (Zustand)
-    │   ├── timerStore.js  # État du minuteur Pomodoro
-    │   └── userStore.js   # Préférences utilisateur & numéro de téléphone
-    ├── lib/
-    │   ├── flemme.js      # Helpers pour déclencher les appels Twilio
-    │   ├── notifications.js
-    │   ├── ambientSound.js
-    │   └── storage.js
-    └── components/
-        ├── NavBar.js
-        └── CelebrationOverlay.js
-```
-
----
 
 ## 🚀 Démarrage rapide
 
@@ -166,25 +131,6 @@ Dans **Paramètres**, renseigne ton numéro de téléphone et l'URL du backend (
 
 ---
 
-## 🔌 API Backend
-
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| `POST` | `/flemme/start` | Démarre une boucle d'appels pour une tâche |
-| `DELETE` | `/flemme/stop/{task_id}` | Arrête la boucle d'appels |
-| `GET` | `/flemme/active` | Liste les boucles actives |
-| `GET` | `/health` | Vérification de santé du serveur |
-
-**Corps de `POST /flemme/start` :**
-```json
-{
-  "task_id": "abc123",
-  "user_phone": "+33612345678",
-  "interval_minutes": 2
-}
-```
-
----
 
 ## 📱 Écrans
 
