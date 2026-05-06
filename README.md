@@ -1,100 +1,100 @@
-# 😤 La Flemme — Anti-Procrastination App
+# 😤 La Flemme — Application Anti-Procrastination
 
-> **Built in 10 hours at a hackathon.**  
-> An app that fights procrastination — not with motivation, but with pressure.
-
----
-
-## What is La Flemme?
-
-**La Flemme** (French slang for laziness) is a mobile + web app that keeps you accountable by doing the one thing no productivity app dares to do: **call your phone and refuse to stop until you finish your task.**
-
-Miss a deadline? La Flemme calls you. Ignores you? She calls again. Every two minutes. Until it's done.
+> **Réalisé en 10 heures lors d'un hackathon.**  
+> Une app qui combat la procrastination — pas avec de la motivation, mais avec de la pression.
 
 ---
 
-## ✨ Features
+## C'est quoi La Flemme ?
 
-### 📋 Task Management
-- Create tasks with a **title**, **description**, **deadline**, and **priority** (high / normal / low)
-- Break tasks down into **concrete steps** with optional time estimates
-- Sortable task list by **date**, **priority**, or **completion progress**
-- Visual progress bars and overdue warnings
+**La Flemme** est une application mobile et web qui te force à rester responsable en faisant ce qu'aucune autre app de productivité n'ose faire : **t'appeler en boucle jusqu'à ce que tu termines ta tâche.**
 
-### ⏱ Pomodoro Focus Cycles
-- Built-in **Pomodoro timer** with customizable durations
-  - 🔥 Focus (default 25 min)
-  - ☕ Short break (default 5 min)
-  - 🌊 Long break every 4 cycles (default 15 min)
-- Per-task cycle sessions — launch directly from a task
-- Ambient sounds on web (rain, lo-fi, etc.)
-- Vibration feedback on mobile at phase transitions
+Tu rates une deadline ? La Flemme t'appelle. Tu l'ignores ? Elle rappelle. Toutes les deux minutes. Jusqu'à ce que ce soit fini.
 
-### 😤 La Flemme — The Accountability System
-- When a task passes its deadline and isn't completed, **La Flemme activates**
-- A Python backend uses **Twilio** to place automated phone calls to your number
-- The call plays a French voice message: *"You have an overdue task. Finish it. Now."*
-- Calls repeat every **2 minutes** until you mark the task as done
-- Can be triggered **manually** or **automatically** at the deadline
-- Escalation schedule: 2h → 1h → 30min → 15min intervals as the delay grows
-- Optional: save "La Flemme 😤" as a contact so you know who's calling
+---
+
+## ✨ Fonctionnalités
+
+### 📋 Gestion des tâches
+- Créer des tâches avec un **titre**, une **description**, une **deadline** et une **priorité** (haute / normale / basse)
+- Découper les tâches en **étapes concrètes** avec des estimations de durée optionnelles
+- Liste triable par **date**, **priorité** ou **avancement**
+- Barres de progression visuelles et alertes de retard
+
+### ⏱ Cycles Focus Pomodoro
+- **Minuteur Pomodoro** intégré avec des durées personnalisables
+  - 🔥 Focus (25 min par défaut)
+  - ☕ Pause courte (5 min par défaut)
+  - 🌊 Grande pause tous les 4 cycles (15 min par défaut)
+- Sessions par tâche — lance un cycle directement depuis une tâche
+- Sons ambiants sur le web (pluie, lo-fi, etc.)
+- Vibrations sur mobile lors des transitions de phase
+
+### 😤 La Flemme — Le Système de Pression
+- Quand une tâche dépasse sa deadline sans être terminée, **La Flemme s'active**
+- Un backend Python utilise **Twilio** pour passer des appels automatiques sur ton numéro
+- Le message vocal : *« La Flemme te rappelle. Tu as une tâche en retard. Finis-la, maintenant. »*
+- Les appels se répètent toutes les **2 minutes** jusqu'à ce que la tâche soit marquée comme terminée
+- Peut être déclenchée **manuellement** ou **automatiquement** à la deadline
+- Escalade : intervalles de 2h → 1h → 30min → 15min au fur et à mesure du retard
+- Optionnel : enregistre « La Flemme 😤 » dans tes contacts pour savoir qui appelle
 
 ### 🎮 Gamification
-- Earn **XP** for completing steps (+10 XP) and tasks (+50 XP)
-- 8 **levels** from *"Full Flemme"* to *"La Flemme vaincue"* (XP-based)
-- **Daily streaks** with motivational messages
-- **Badges** unlocked by milestones (first task, 5-day streak, 1000 XP, etc.)
-- **Stats screen** with weekly activity chart and key metrics
+- Gagne des **XP** en complétant des étapes (+10 XP) et des tâches (+50 XP)
+- 8 **niveaux** de *« Full Flemme »* à *« La Flemme vaincue »* (basé sur les XP)
+- **Streaks quotidiens** avec messages de motivation
+- **Badges** débloqués par paliers (première tâche, streak de 5 jours, 1000 XP, etc.)
+- **Écran de statistiques** avec graphique d'activité hebdomadaire et indicateurs clés
 
-### ⚙️ Settings
-- Phone number for receiving La Flemme calls
-- Backend URL configuration
-- Customizable Pomodoro durations
-- Auto-activation toggle for La Flemme
-- Demo data loader (10 realistic tasks pre-filled)
+### ⚙️ Paramètres
+- Numéro de téléphone pour recevoir les appels de La Flemme
+- Configuration de l'URL du backend
+- Durées Pomodoro personnalisables
+- Interrupteur d'activation automatique de La Flemme
+- Chargement des données de démo (10 tâches réalistes pré-remplies)
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Stack Technique
 
-| Layer | Technology |
-|-------|-----------|
+| Couche | Technologie |
+|--------|-------------|
 | Mobile / Web | React Native + Expo (iOS, Android, Web) |
-| Routing | Expo Router (file-based) |
-| State Management | Zustand |
-| Local Storage | AsyncStorage |
+| Routage | Expo Router (basé sur les fichiers) |
+| Gestion d'état | Zustand |
+| Stockage local | AsyncStorage |
 | Backend | Python + FastAPI |
-| Phone Calls | Twilio |
+| Appels téléphoniques | Twilio |
 | Notifications | Expo Notifications |
 
 ---
 
-## 📁 Project Structure
+## 📁 Structure du projet
 
 ```
 .
-├── backend/               # Python FastAPI backend
-│   ├── main.py            # API server + Twilio call loop
+├── backend/               # Backend Python FastAPI
+│   ├── main.py            # Serveur API + boucle d'appels Twilio
 │   ├── requirements.txt
 │   └── .env.example
-└── mobile/                # Expo React Native app
+└── mobile/                # Application Expo React Native
     ├── app/
     │   ├── (tabs)/
-    │   │   ├── index.js   # Task list (home screen)
+    │   │   ├── index.js   # Liste des tâches (écran d'accueil)
     │   │   └── stats.js   # XP, streaks, badges
     │   ├── task/
-    │   │   ├── create.js  # New task form
-    │   │   └── [id].js    # Task detail & step completion
+    │   │   ├── create.js  # Formulaire de création de tâche
+    │   │   └── [id].js    # Détail de tâche & complétion des étapes
     │   ├── cycle/
-    │   │   └── [id].js    # Pomodoro timer screen
-    │   ├── onboarding.js  # First-launch flow
-    │   └── settings.js    # App settings
+    │   │   └── [id].js    # Écran du minuteur Pomodoro
+    │   ├── onboarding.js  # Flux de premier lancement
+    │   └── settings.js    # Paramètres de l'app
     ├── stores/
-    │   ├── taskStore.js   # Task state (Zustand)
-    │   ├── timerStore.js  # Pomodoro timer state
-    │   └── userStore.js   # User prefs & phone number
+    │   ├── taskStore.js   # État des tâches (Zustand)
+    │   ├── timerStore.js  # État du minuteur Pomodoro
+    │   └── userStore.js   # Préférences utilisateur & numéro de téléphone
     ├── lib/
-    │   ├── flemme.js      # Twilio call trigger helpers
+    │   ├── flemme.js      # Helpers pour déclencher les appels Twilio
     │   ├── notifications.js
     │   ├── ambientSound.js
     │   └── storage.js
@@ -105,77 +105,77 @@ Miss a deadline? La Flemme calls you. Ignores you? She calls again. Every two mi
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Démarrage rapide
 
-### Prerequisites
+### Prérequis
 - Node.js ≥ 18
 - Python 3.10+
-- A [Twilio](https://twilio.com) account (for phone calls)
-- Expo Go app on your phone (optional, for native testing)
+- Un compte [Twilio](https://twilio.com) (pour les appels téléphoniques)
+- L'application Expo Go sur ton téléphone (optionnel, pour les tests natifs)
 
 ---
 
-### Backend Setup
+### Installation du backend
 
 ```bash
 cd backend
 
-# Install dependencies
+# Installer les dépendances
 pip install -r requirements.txt
 
-# Copy and fill in your environment variables
+# Copier et remplir les variables d'environnement
 cp .env.example .env
 ```
 
-Edit `.env`:
+Éditer `.env` :
 ```env
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-TWILIO_FROM_NUMBER=+33700000000   # Your Twilio number
+TWILIO_FROM_NUMBER=+33700000000   # Ton numéro Twilio
 ```
 
-Start the server:
+Démarrer le serveur :
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The API will be available at `http://localhost:8000`.
+L'API sera disponible sur `http://localhost:8000`.
 
 ---
 
-### Mobile / Web Setup
+### Installation mobile / web
 
 ```bash
 cd mobile
 
-# Install dependencies
+# Installer les dépendances
 npm install
 
-# Start the Expo dev server
+# Démarrer le serveur de développement Expo
 npm start
 
-# Or target a specific platform
+# Ou cibler une plateforme spécifique
 npm run android
 npm run ios
 npm run web
 ```
 
-Open the app in Expo Go (scan QR code) or in your browser.
+Ouvre l'app dans Expo Go (scan du QR code) ou dans ton navigateur.
 
-In **Settings**, set your phone number and the backend URL (e.g. `http://YOUR_IP:8000`).
+Dans **Paramètres**, renseigne ton numéro de téléphone et l'URL du backend (ex. `http://TON_IP:8000`).
 
 ---
 
-## 🔌 Backend API
+## 🔌 API Backend
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/flemme/start` | Start a call loop for a task |
-| `DELETE` | `/flemme/stop/{task_id}` | Stop the call loop |
-| `GET` | `/flemme/active` | List active call loops |
-| `GET` | `/health` | Health check |
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| `POST` | `/flemme/start` | Démarre une boucle d'appels pour une tâche |
+| `DELETE` | `/flemme/stop/{task_id}` | Arrête la boucle d'appels |
+| `GET` | `/flemme/active` | Liste les boucles actives |
+| `GET` | `/health` | Vérification de santé du serveur |
 
-**`POST /flemme/start` body:**
+**Corps de `POST /flemme/start` :**
 ```json
 {
   "task_id": "abc123",
@@ -186,29 +186,29 @@ In **Settings**, set your phone number and the backend URL (e.g. `http://YOUR_IP
 
 ---
 
-## 📱 Screens
+## 📱 Écrans
 
-| Screen | Description |
-|--------|-------------|
-| **Task list** | View all pending & completed tasks, sortable by date / priority / progress |
-| **Task detail** | Check off steps, launch a focus cycle, manually trigger La Flemme |
-| **Create task** | Form with title, deadline, steps and time estimates |
-| **Focus cycle** | Pomodoro timer linked to the current task |
-| **Stats** | XP level, streak, weekly chart, badges |
-| **Settings** | Phone number, Pomodoro config, La Flemme toggle |
-| **Onboarding** | 5-step first-launch introduction |
-
----
-
-## 🧑‍💻 Development Notes
-
-- The app runs fully **offline** — tasks are stored locally via AsyncStorage.  
-  The backend is only required when La Flemme needs to place a call.
-- The UI language is **French** (this was a French hackathon project).
-- Demo data can be loaded from the empty state screen or from Settings.
+| Écran | Description |
+|-------|-------------|
+| **Liste des tâches** | Affiche toutes les tâches en cours et terminées, triables par date / priorité / avancement |
+| **Détail d'une tâche** | Cocher les étapes, lancer un cycle focus, déclencher La Flemme manuellement |
+| **Créer une tâche** | Formulaire avec titre, deadline, étapes et estimations de temps |
+| **Cycle focus** | Minuteur Pomodoro lié à la tâche en cours |
+| **Statistiques** | Niveau XP, streak, graphique hebdomadaire, badges |
+| **Paramètres** | Numéro de téléphone, config Pomodoro, interrupteur La Flemme |
+| **Onboarding** | Introduction en 5 étapes au premier lancement |
 
 ---
 
-## 📄 License
+## 🧑‍💻 Notes de développement
 
-MIT — built during a hackathon, use freely.
+- L'app fonctionne entièrement **hors ligne** — les tâches sont stockées localement via AsyncStorage.  
+  Le backend n'est nécessaire que lorsque La Flemme doit passer un appel.
+- L'interface est en **français** (projet réalisé dans le cadre d'un hackathon français).
+- Les données de démo peuvent être chargées depuis l'écran vide ou depuis les Paramètres.
+
+---
+
+## 📄 Licence
+
+MIT — réalisé lors d'un hackathon, utilisation libre.
