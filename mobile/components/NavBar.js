@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router, usePathname } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const NAV_ITEMS = [
   { path: '/',         icon: '📋', label: 'Tâches'  },
   { path: '/stats',    icon: '🏆', label: 'Stats'   },
-  { path: '/settings', icon: '⚙️', label: 'Params'  },
+  { path: '/settings', icon: '⚙️', label: 'Paramètres' },
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const isActive = (path) => {
     if (path === '/') return pathname === '/' || pathname === '/index';
@@ -24,7 +26,7 @@ export default function NavBar() {
 
   return (
     <View>
-      <View style={styles.bar}>
+      <View style={[styles.bar, { paddingTop: insets.top + 12 }]}>
         <TouchableOpacity onPress={() => router.push('/')} activeOpacity={0.7}>
           <Text style={styles.logo}>La Flemme</Text>
         </TouchableOpacity>
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#1a1a2e',
     paddingHorizontal: 16,
-    paddingTop: 14,
     paddingBottom: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#0f3460',

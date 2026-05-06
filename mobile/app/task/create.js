@@ -83,7 +83,7 @@ export default function CreateTaskScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <TouchableOpacity style={styles.backRow} onPress={() => router.push('/')}>
         <Text style={styles.backText}>← Mes tâches</Text>
       </TouchableOpacity>

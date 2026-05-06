@@ -113,7 +113,7 @@ export default function TaskDetailScreen() {
   const handleDelete = () => setConfirmDelete(true);
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <CelebrationOverlay visible={celebrating} />
 
       <View style={styles.topBar}>
