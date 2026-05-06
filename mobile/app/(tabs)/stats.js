@@ -50,22 +50,20 @@ export default function StatsScreen() {
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.title}>Ton profil anti-flemme</Text>
         <View style={[styles.streakCard, streak >= 3 && styles.streakCardActive]}>
-          <View style={styles.streakLeft}>
+          <View style={styles.streakTop}>
             <Text style={styles.streakEmoji}>{streakEmoji(streak)}</Text>
             <View>
               <Text style={styles.streakNumber}>{streak}</Text>
               <Text style={styles.streakLabel}>jour{streak !== 1 ? 's' : ''} de streak</Text>
             </View>
           </View>
-          <View style={styles.streakRight}>
-            <Text style={styles.streakMsg}>
-              {streak === 0 && 'Complète une tâche\naujourd\'hui pour démarrer !'}
-              {streak === 1 && 'C\'est un début 💪\nReviens demain !'}
-              {streak >= 2 && streak < 7 && `${7 - streak} jours pour\natteindre une semaine !`}
-              {streak >= 7 && streak < 14 && 'Une semaine complète 🔥\nContinue !'}
-              {streak >= 14 && 'Tu es une machine.\nLa Flemme a peur de toi.'}
-            </Text>
-          </View>
+          <Text style={styles.streakMsg}>
+            {streak === 0 && 'Complète une tâche aujourd\'hui pour démarrer !'}
+            {streak === 1 && 'C\'est un début 💪 Reviens demain !'}
+            {streak >= 2 && streak < 7 && `Plus que ${7 - streak} jour${7 - streak > 1 ? 's' : ''} pour atteindre une semaine !`}
+            {streak >= 7 && streak < 14 && 'Une semaine complète 🔥 Continue comme ça !'}
+            {streak >= 14 && 'Tu es une machine. La Flemme a peur de toi. 👑'}
+          </Text>
         </View>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Activité — 7 derniers jours</Text>
@@ -105,20 +103,24 @@ export default function StatsScreen() {
         </View>
         <View style={styles.grid}>
           <Stat label="XP Total" value={xp} emoji="⚡" />
-          <Stat label="Streak actuel" value={`${streak}j`} emoji={streakEmoji(streak)} />
+          <Stat label="Streak actuel" value={`${streak} Jour`} emoji={streakEmoji(streak)} />
           <Stat label="Tâches finies" value={completed} emoji="✅" />
           <Stat label="Étapes faites" value={totalSteps} emoji="🎯" />
         </View>
         <View style={styles.badgeSection}>
-          <Text style={styles.sectionTitle}>Badges</Text>
+          <Text style={styles.sectionTitle}>Badges débloqués</Text>
           <View style={styles.badges}>
-            {completed >= 1 ? <Badge emoji="🥇" label="Premier sang" /> : <Badge emoji="🥇" label="Premier sang" locked />}
-            {completed >= 5 ? <Badge emoji="🔥" label="En feu" /> : <Badge emoji="🔥" label="En feu" locked />}
-            {streak >= 3 ? <Badge emoji="✨" label="3j streak" /> : <Badge emoji="✨" label="3j streak" locked />}
-            {streak >= 7 ? <Badge emoji="⚡" label="7j streak" /> : <Badge emoji="⚡" label="7j streak" locked />}
-            {streak >= 30 ? <Badge emoji="🏆" label="30j streak" /> : <Badge emoji="🏆" label="30j streak" locked />}
-            {xp >= 200 ? <Badge emoji="💎" label="XP 200" /> : <Badge emoji="💎" label="XP 200" locked />}
+            {completed >= 1 && <Badge emoji="🥇" label="Premier sang" />}
+            {completed >= 5 && <Badge emoji="🔥" label="En feu" />}
+            {streak >= 3 && <Badge emoji="✨" label="3j streak" />}
+            {streak >= 7 && <Badge emoji="⚡" label="7j streak" />}
+            {streak >= 30 && <Badge emoji="🏆" label="30j streak" />}
+            {xp >= 200 && <Badge emoji="💎" label="XP 200" />}
+            {xp >= 1000 && <Badge emoji="👑" label="XP 1000" />}
           </View>
+          {[completed >= 1, completed >= 5, streak >= 3, streak >= 7, streak >= 30, xp >= 200, xp >= 1000].filter(Boolean).length === 0 && (
+            <Text style={styles.noBadge}>Complète des tâches pour débloquer tes premiers badges.</Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -135,11 +137,11 @@ function Stat({ label, value, emoji }) {
   );
 }
 
-function Badge({ emoji, label, locked }) {
+function Badge({ emoji, label }) {
   return (
-    <View style={[styles.badge, locked && styles.badgeLocked]}>
-      <Text style={{ fontSize: 26, opacity: locked ? 0.25 : 1 }}>{emoji}</Text>
-      <Text style={[styles.badgeLabel, locked && { color: '#444' }]}>{label}</Text>
+    <View style={styles.badge}>
+      <Text style={{ fontSize: 26 }}>{emoji}</Text>
+      <Text style={styles.badgeLabel}>{label}</Text>
     </View>
   );
 }
@@ -150,15 +152,14 @@ const styles = StyleSheet.create({
 
   streakCard: {
     backgroundColor: '#1a1a2e', borderRadius: 16, padding: 18, marginBottom: 20,
-    flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#0f3460',
+    borderWidth: 1, borderColor: '#0f3460',
   },
   streakCardActive: { borderColor: '#e94560', backgroundColor: '#1a0f0f' },
-  streakLeft: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },
+  streakTop: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 10 },
   streakEmoji: { fontSize: 44 },
   streakNumber: { fontSize: 40, fontWeight: '900', color: '#e94560', lineHeight: 44 },
   streakLabel: { fontSize: 12, color: '#8888aa', fontWeight: '700' },
-  streakRight: { flex: 1, alignItems: 'flex-end' },
-  streakMsg: { color: '#8888aa', fontSize: 12, textAlign: 'right', lineHeight: 18 },
+  streakMsg: { color: '#ccc', fontSize: 14, lineHeight: 20 },
 
   section: { marginBottom: 20 },
   sectionTitle: { fontSize: 13, fontWeight: '800', color: '#8888aa', marginBottom: 12, letterSpacing: 0.5 },
@@ -199,6 +200,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1a1a2e', borderRadius: 12, padding: 12,
     alignItems: 'center', minWidth: 76,
   },
-  badgeLocked: { opacity: 0.4 },
   badgeLabel: { fontSize: 10, color: '#eee', marginTop: 4, textAlign: 'center' },
+  noBadge: { color: '#555', fontSize: 13, fontStyle: 'italic', marginTop: 8 },
 });

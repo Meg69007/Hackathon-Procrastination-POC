@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useUserStore } from '../stores/userStore';
+import { useTaskStore } from '../stores/taskStore';
 import { createFlemmeContact, FLEMME_PHONE } from '../lib/flemme';
 import NavBar from '../components/NavBar';
 
 export default function SettingsScreen() {
   const { phone, backendUrl, focusMinutes, breakMinutes, longBreakMinutes, autoFlemme, save, hydrate, loaded } = useUserStore();
+  const { seedDemoData, clearAllTasks } = useTaskStore();
   const [lPhone, setLPhone] = useState('');
   const [lUrl, setLUrl] = useState('');
   const [lFocus, setLFocus] = useState('25');
@@ -54,10 +56,6 @@ export default function SettingsScreen() {
               <TextInput style={styles.input} placeholder="+33 6 XX XX XX XX" placeholderTextColor="#555"
                 value={lPhone} onChangeText={setLPhone} keyboardType="phone-pad" />
             </Field>
-            <Field label="URL du serveur (même Wi-Fi)">
-              <TextInput style={styles.input} placeholder="http://192.168.X.X:8000" placeholderTextColor="#555"
-                value={lUrl} onChangeText={setLUrl} autoCapitalize="none" keyboardType="url" />
-            </Field>
           </Section>
           <Section title="CYCLES POMODORO">
             <View style={styles.pomodoroRow}>
@@ -95,6 +93,23 @@ export default function SettingsScreen() {
           <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
             <Text style={styles.saveBtnText}>Sauvegarder</Text>
           </TouchableOpacity>
+
+          <Section title="DÉMO">
+            <TouchableOpacity style={styles.demoBtn} onPress={async () => {
+              await seedDemoData();
+              Alert.alert('Données chargées ✅', '10 tâches de démo injectées.');
+            }}>
+              <Text style={styles.demoBtnText}>Charger les données de démo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.clearBtn} onPress={() =>
+              Alert.alert('Vider toutes les tâches ?', 'Action irréversible.', [
+                { text: 'Annuler', style: 'cancel' },
+                { text: 'Vider', style: 'destructive', onPress: async () => { await clearAllTasks(); Alert.alert('Vidé ✅'); } },
+              ])
+            }>
+              <Text style={styles.clearBtnText}>Vider toutes les tâches</Text>
+            </TouchableOpacity>
+          </Section>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -157,4 +172,8 @@ const styles = StyleSheet.create({
   infoText: { color: '#8888aa', fontSize: 13, lineHeight: 20 },
   saveBtn: { backgroundColor: '#e94560', borderRadius: 12, padding: 16, alignItems: 'center', marginTop: 8 },
   saveBtnText: { color: '#fff', fontWeight: '800', fontSize: 16 },
+  demoBtn: { backgroundColor: '#0f3460', borderRadius: 12, padding: 14, alignItems: 'center', marginBottom: 10 },
+  demoBtnText: { color: '#eee', fontWeight: '800', fontSize: 14 },
+  clearBtn: { backgroundColor: '#1a0a0a', borderRadius: 12, padding: 14, alignItems: 'center', borderWidth: 1, borderColor: '#b71c1c' },
+  clearBtnText: { color: '#e94560', fontWeight: '700', fontSize: 14 },
 });

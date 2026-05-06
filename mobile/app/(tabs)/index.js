@@ -152,10 +152,14 @@ function DoneSection({ tasks }) {
 }
 
 function EmptyState() {
+  const { seedDemoData } = useTaskStore();
   return (
     <View style={styles.empty}>
       <Text style={styles.emptyEmoji}>😴</Text>
       <Text style={styles.emptyText}>Aucune tâche en cours.{'\n'}La Flemme te regarde...</Text>
+      <TouchableOpacity style={styles.demoBtn} onPress={seedDemoData} activeOpacity={0.8}>
+        <Text style={styles.demoBtnText}>Charger les données de démo</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -191,4 +195,6 @@ const styles = StyleSheet.create({
   empty: { alignItems: 'center', paddingTop: 80 },
   emptyEmoji: { fontSize: 64 },
   emptyText: { color: '#8888aa', textAlign: 'center', marginTop: 16, fontSize: 15 },
+  demoBtn: { marginTop: 28, backgroundColor: '#0f3460', borderRadius: 12, paddingHorizontal: 24, paddingVertical: 14, borderWidth: 1, borderColor: '#e94560' },
+  demoBtnText: { color: '#e94560', fontWeight: '800', fontSize: 14 },
 });

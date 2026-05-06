@@ -160,6 +160,75 @@ export const useTaskStore = create((set, get) => ({
     await saveTasks(tasks);
   },
 
+  clearAllTasks: async () => {
+    set({ tasks: [] });
+    await saveTasks([]);
+  },
+
+  seedDemoData: async () => {
+    const now = new Date();
+    const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2);
+    const daysAgo = (n) => { const d = new Date(now); d.setDate(d.getDate() - n); return d.toISOString(); };
+    const daysFromNow = (n) => { const d = new Date(now); d.setDate(d.getDate() + n); return d.toISOString(); };
+    const hoursAgo = (n) => { const d = new Date(now); d.setHours(d.getHours() - n); return d.toISOString(); };
+
+    const mkStep = (title, minutes, done = false, i = 0) => ({
+      id: uid(), title, notes: '', estimatedMinutes: minutes, order: i, completed: done,
+    });
+
+    const mkDone = (title, desc, priority, stepDefs, completedAt, estMin) => ({
+      id: uid(), title, description: desc, estimatedMinutes: estMin, dueDate: completedAt,
+      priority, steps: stepDefs.map((s, i) => mkStep(s.t, s.m, true, i)),
+      completed: true, flemmeActive: false, flemmeActivatedAt: null, flemmeCallCount: 0,
+      createdAt: completedAt, completedAt,
+      xp: stepDefs.length * 10 + 50,
+    });
+
+    const mkPending = (title, desc, priority, stepDefs, dueDate, estMin, doneCnt = 0, flemme = false) => ({
+      id: uid(), title, description: desc, estimatedMinutes: estMin, dueDate, priority,
+      steps: stepDefs.map((s, i) => mkStep(s.t, s.m, i < doneCnt, i)),
+      completed: false, flemmeActive: flemme,
+      flemmeActivatedAt: flemme ? hoursAgo(2) : null, flemmeCallCount: flemme ? 3 : 0,
+      createdAt: daysAgo(7), xp: doneCnt * 10,
+    });
+
+    const tasks = [
+      mkDone('Réviser le cours d\'algo', 'Arbres, graphes, tri rapide', 'high',
+        [{ t: 'Revoir les arbres binaires', m: 30 }, { t: 'S\'exercer sur les graphes', m: 45 }, { t: 'Faire les exercices du cours', m: 60 }],
+        daysAgo(4), 135),
+      mkDone('Préparer la soutenance', 'Slides + répétition du discours', 'high',
+        [{ t: 'Faire le plan', m: 20 }, { t: 'Créer les slides', m: 60 }, { t: 'Répéter', m: 30 }, { t: 'Tester le matériel', m: 15 }],
+        daysAgo(3), 125),
+      mkDone('Rendre le rapport de stage', 'Rapport final complet', 'normal',
+        [{ t: 'Rédiger l\'introduction', m: 30 }, { t: 'Compléter les parties techniques', m: 90 }, { t: 'Relire et corriger', m: 30 }],
+        daysAgo(2), 150),
+      mkDone('Finir le TP Python', 'Classes et héritage', 'normal',
+        [{ t: 'Implémenter la classe de base', m: 45 }, { t: 'Ajouter les sous-classes', m: 30 }, { t: 'Écrire les tests', m: 30 }],
+        daysAgo(1), 105),
+      mkDone('Corriger les bugs du projet', 'Sprint de correction avant démo', 'high',
+        [{ t: 'Identifier tous les bugs', m: 20 }, { t: 'Corriger le bug de navigation', m: 40 }, { t: 'Tester sur Android et iOS', m: 30 }],
+        daysAgo(0), 90),
+      mkDone('Mettre à jour le README', 'Documentation du projet hackathon', 'low',
+        [{ t: 'Décrire les fonctionnalités', m: 20 }, { t: 'Ajouter les instructions d\'installation', m: 15 }],
+        daysAgo(0), 35),
+      mkPending('Préparer l\'exam de maths', 'Analyse, algèbre linéaire et probabilités', 'high',
+        [{ t: 'Réviser les intégrales', m: 45 }, { t: 'Revoir les matrices', m: 40 }, { t: 'Exercices de proba', m: 50 }, { t: 'Corriger les annales', m: 60 }],
+        daysFromNow(1), 195, 2),
+      mkPending('Refactor le module auth', 'Nettoyer le code et améliorer la sécurité', 'normal',
+        [{ t: 'Analyser le code existant', m: 30 }, { t: 'Extraire les fonctions utilitaires', m: 45 }, { t: 'Mettre à jour les tests', m: 30 }],
+        daysFromNow(3), 105, 1),
+      mkPending('Écrire les tests unitaires', 'Couverture de 80% minimum', 'normal',
+        [{ t: 'Tests du store Zustand', m: 40 }, { t: 'Tests des composants UI', m: 50 }, { t: 'Tests des fonctions utilitaires', m: 30 }],
+        daysFromNow(5), 120, 0),
+      mkPending('Préparer la démo du hackathon', 'Présentation live de l\'app en 5 minutes', 'high',
+        [{ t: 'Écrire le script de démo', m: 20 }, { t: 'Tester le scénario complet', m: 30 }, { t: 'Répéter la présentation', m: 20 }],
+        hoursAgo(1), 70, 0, true),
+    ];
+
+    set({ tasks });
+    await saveTasks(tasks);
+  },
+
   getTotalXP: () => get().tasks.reduce((sum, t) => sum + (t.xp || 0), 0),
   getCompletedCount: () => get().tasks.filter((t) => t.completed).length,
   getPendingOverdue: () => {
